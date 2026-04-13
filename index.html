@@ -2,245 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumping Lemma Visualizer</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Google Fonts: Playfair Display (display) + IBM Plex Mono (code/labels) + Source Serif 4 (body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pumping Lemma — Regular Languages</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===================== LANDING PAGE ===================== -->
-  <section id="landing" class="view active">
-    <div class="landing-decor">
-      <span class="decor-char top-left">∀</span>
-      <span class="decor-char top-right">∃</span>
-      <span class="decor-char bot-left">∈</span>
-      <span class="decor-char bot-right">⊆</span>
-    </div>
+  <div class="bg-texture"></div>
 
-    <div class="landing-content">
-      <div class="landing-tag">Formal Languages · Automata Theory</div>
-      <h1 class="landing-title">
-        Pumping<br /><em>Lemma</em><br />Visualizer
-      </h1>
-      <p class="landing-desc">
-        An interactive tool for decomposing strings and exploring
-        the structural constraints that define regular languages.
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-eyebrow">
+      <span class="eyebrow-pip"></span>
+      Formal Language Theory
+    </div>
+    <h1 class="site-title">
+      Pumping Lemma
+      <em class="title-em">Demonstrator</em>
+    </h1>
+    <p class="site-subtitle">An interactive tool for understanding regularity proofs through visual decomposition</p>
+  </header>
+
+  <!-- THEOREM BANNER -->
+  <section class="theorem-section">
+    <div class="theorem-card">
+      <span class="theorem-tag">Theorem</span>
+      <p class="theorem-text">
+        If <em>L</em> is a regular language, ∃ pumping length <em>p</em> ≥ 1 such that ∀ <em>s</em> ∈ L with |<em>s</em>| ≥ <em>p</em>,
+        we can write <em>s = xyz</em> where:
       </p>
-      <button id="btn-start" class="btn-primary">
-        <span>Get Started</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Decorative formula strip -->
-    <div class="formula-strip">
-      <span>w = xyz</span>
-      <span class="sep">·</span>
-      <span>|y| &gt; 0</span>
-      <span class="sep">·</span>
-      <span>|xy| ≤ p</span>
-      <span class="sep">·</span>
-      <span>xy<sup>i</sup>z ∈ L</span>
-      <span class="sep">·</span>
-      <span>∀i ≥ 0</span>
+      <div class="theorem-conditions">
+        <div class="cond-item"><span class="cond-num">①</span> |<em>y</em>| ≥ 1</div>
+        <div class="cond-item"><span class="cond-num">②</span> |<em>xy</em>| ≤ <em>p</em></div>
+        <div class="cond-item"><span class="cond-num">③</span> xy<sup>i</sup>z ∈ L &nbsp;for all i ≥ 0</div>
+      </div>
     </div>
   </section>
 
-  <!-- ===================== TOOL INTERFACE ===================== -->
-  <section id="tool" class="view">
+  <!-- MAIN -->
+  <main class="main-layout">
 
-    <!-- Top bar -->
-    <header class="tool-header">
-      <div class="tool-logo">PL<span>Viz</span></div>
-      <div class="header-center">
-        <span class="header-formula">w = x · y<sup>i</sup> · z</span>
-      </div>
-      <button id="btn-reset" class="btn-ghost">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-        Reset
-      </button>
-    </header>
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
 
-    <!-- Main layout -->
-    <main class="tool-body">
+      <div class="sidebar-block">
+        <div class="sb-eyebrow">Step 01</div>
+        <h2 class="sb-title">Select Language</h2>
 
-      <!-- LEFT: Controls -->
-      <div class="panel panel-controls">
-        <h2 class="panel-title">Input</h2>
-
-        <!-- Language selector -->
-        <div class="field-group">
-          <label for="sel-language">Language <em>L</em></label>
-          <select id="sel-language">
-            <option value="abn">{ aⁿbⁿ | n ≥ 1 }  — not regular</option>
-            <option value="anbn_custom">Custom string</option>
+        <div class="form-group">
+          <label for="languageSelect">Language preset</label>
+          <select id="languageSelect">
+            <option value="custom">— Custom input —</option>
+            <option value="abn">{ aⁿbⁿ | n ≥ 1 } — NOT Regular</option>
+            <option value="anbn_mod">{ aⁿbⁿ | n ≥ 0 } — NOT Regular</option>
+            <option value="a_star_b_star">{ aⁿbᵐ | n,m ≥ 0 } — Regular</option>
+            <option value="palindrome">{ ww^R | w ∈ {a,b}* } — NOT Regular</option>
+            <option value="equal_ab">{ w | #a(w) = #b(w) } — NOT Regular</option>
           </select>
-          <p class="field-hint">Select a language to test against.</p>
         </div>
 
-        <!-- Pumping length -->
-        <div class="field-group">
-          <label for="inp-p">Pumping length <em>p</em></label>
-          <input type="number" id="inp-p" min="1" max="20" value="3" />
-          <p class="field-hint">Assume the language has pumping length p.</p>
-        </div>
-
-        <!-- String w -->
-        <div class="field-group">
-          <label for="inp-w">String <em>w</em></label>
-          <input type="text" id="inp-w" placeholder="e.g. aaabbb" value="aaabbb"
-                 autocomplete="off" spellcheck="false" />
-          <p class="field-hint">Must satisfy |w| ≥ p.</p>
-        </div>
-
-        <!-- Split points -->
-        <div class="split-row">
-          <div class="field-group">
-            <label for="inp-x">|x|</label>
-            <input type="number" id="inp-x" min="0" value="1" />
-          </div>
-          <div class="field-group">
-            <label for="inp-y">|y|</label>
-            <input type="number" id="inp-y" min="1" value="2" />
-          </div>
-        </div>
-        <p class="field-hint split-hint">z gets the remainder. |y| must be &gt; 0 and |xy| ≤ p.</p>
-
-        <!-- Constraints display -->
-        <div class="constraints-box" id="constraints-box">
-          <div class="constraint" id="c-yw">
-            <span class="c-icon">○</span>
-            <span>|w| ≥ p</span>
-          </div>
-          <div class="constraint" id="c-y">
-            <span class="c-icon">○</span>
-            <span>|y| &gt; 0</span>
-          </div>
-          <div class="constraint" id="c-xy">
-            <span class="c-icon">○</span>
-            <span>|xy| ≤ p</span>
-          </div>
-        </div>
-
-        <!-- Pump controls -->
-        <div class="pump-controls">
-          <label class="pump-label">Exponent <em>i</em> = <strong id="display-i">1</strong></label>
-          <div class="pump-buttons">
-            <button id="btn-pump-down" class="btn-pump">−</button>
-            <input type="range" id="slider-i" min="0" max="6" value="1" />
-            <button id="btn-pump-up" class="btn-pump">+</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CENTER: Visualization -->
-      <div class="panel panel-viz">
-        <h2 class="panel-title">String Decomposition</h2>
-
-        <!-- Decomposition labels -->
-        <div class="decomp-labels" id="decomp-labels">
-          <span class="lbl-x">x</span>
-          <span class="lbl-y">y<sup id="exp-label">1</sup></span>
-          <span class="lbl-z">z</span>
-        </div>
-
-        <!-- The visual string -->
-        <div class="string-display" id="string-display">
-          <!-- Characters rendered by JS -->
-        </div>
-
-        <!-- Pumped string -->
-        <div class="pumped-row">
-          <span class="pumped-label">xy<sup id="pumped-exp">1</sup>z =</span>
-          <span class="pumped-string" id="pumped-string"></span>
-        </div>
-
-        <!-- Verdict -->
-        <div class="verdict" id="verdict">
-          <span class="verdict-icon" id="verdict-icon">—</span>
-          <span class="verdict-text" id="verdict-text">Configure the decomposition above.</span>
-        </div>
-
-        <!-- Length info bar -->
-        <div class="length-bar" id="length-bar">
-          <span>|w| = <strong id="len-w">0</strong></span>
-          <span>|x| = <strong id="len-x">0</strong></span>
-          <span>|y| = <strong id="len-y">0</strong></span>
-          <span>|z| = <strong id="len-z">0</strong></span>
-          <span>|xy<sup id="len-exp">i</sup>z| = <strong id="len-pumped">0</strong></span>
+        <div class="form-group">
+          <label for="inputString">Input string <span class="label-hint">symbols: a &amp; b only</span></label>
+          <input type="text" id="inputString" placeholder="e.g. aaabbb" autocomplete="off" spellcheck="false"/>
         </div>
       </div>
 
-      <!-- RIGHT: Concept guide -->
-      <aside class="panel panel-guide">
-        <h2 class="panel-title">Concept Guide</h2>
+      <div class="sb-divider"></div>
 
-        <div class="guide-section">
-          <h3>The Theorem</h3>
-          <p>
-            If <em>L</em> is a regular language, then there exists a pumping
-            length <em>p</em> such that every string <em>w ∈ L</em> with
-            |w| ≥ p can be split as <strong>w = xyz</strong> satisfying three conditions.
-          </p>
-        </div>
+      <div class="sidebar-block">
+        <div class="sb-eyebrow">Step 02</div>
+        <h2 class="sb-title">Set Parameters</h2>
 
-        <div class="guide-section">
-          <h3>Three Conditions</h3>
-          <div class="condition">
-            <span class="cond-num">①</span>
-            <div>
-              <strong>|y| &gt; 0</strong>
-              <p>The middle segment y must be non-empty — you must be pumping <em>something</em>.</p>
-            </div>
-          </div>
-          <div class="condition">
-            <span class="cond-num">②</span>
-            <div>
-              <strong>|xy| ≤ p</strong>
-              <p>The first two segments together fit within the pumping length.</p>
-            </div>
-          </div>
-          <div class="condition">
-            <span class="cond-num">③</span>
-            <div>
-              <strong>∀i ≥ 0: xy<sup>i</sup>z ∈ L</strong>
-              <p>Pumping y any number of times (including zero) must keep the string in L.</p>
-            </div>
+        <div class="form-group">
+          <label for="pumpingLength">Pumping length <em>p</em></label>
+          <div class="slider-row">
+            <input type="range" id="pumpingLength" min="1" max="10" value="3" />
+            <span class="slider-val" id="pumpingLengthVal">3</span>
           </div>
         </div>
 
-        <div class="guide-section">
-          <h3>Using as a Proof</h3>
-          <p>
-            To prove <em>L</em> is <strong>not</strong> regular: assume it is,
-            pick <em>w</em> cleverly, show that <em>every</em> valid split
-            xyz produces a pumped string outside L. Contradiction!
-          </p>
+        <div class="form-group">
+          <label for="splitX">Length of <strong>x</strong></label>
+          <div class="slider-row">
+            <input type="range" id="splitX" min="0" max="5" value="1" />
+            <span class="slider-val" id="splitXVal">1</span>
+          </div>
         </div>
 
-        <div class="guide-section guide-example">
-          <h3>Classic Example</h3>
-          <code>L = { aⁿbⁿ | n ≥ 1 }</code>
-          <p>
-            Any valid split must have y entirely within the <em>a</em>-block
-            (since |xy| ≤ p). Pumping gives more a's than b's — not in L.
-          </p>
+        <div class="form-group">
+          <label for="splitY">Length of <strong>y</strong> <span class="label-hint">≥ 1</span></label>
+          <div class="slider-row">
+            <input type="range" id="splitY" min="1" max="5" value="2" />
+            <span class="slider-val" id="splitYVal">2</span>
+          </div>
         </div>
-      </aside>
 
-    </main>
-  </section>
+        <div class="form-group">
+          <label for="pumpCount">Pump count <em>i</em></label>
+          <div class="slider-row">
+            <input type="range" id="pumpCount" min="0" max="5" value="2" />
+            <span class="slider-val" id="pumpCountVal">2</span>
+          </div>
+        </div>
+      </div>
 
-  <script src="js/main.js"></script>
+      <button class="btn-run" id="btnDemonstrate">
+        Run Demonstration <span class="btn-arr">→</span>
+      </button>
+
+      <div class="legend">
+        <div class="leg-item"><span class="leg-dot dot-x"></span> x &mdash; fixed prefix</div>
+        <div class="leg-item"><span class="leg-dot dot-y"></span> y &mdash; pumped segment</div>
+        <div class="leg-item"><span class="leg-dot dot-z"></span> z &mdash; fixed suffix</div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT VIS COLUMN -->
+    <section class="vis-col">
+
+      <div class="vis-card" id="visDecomposition">
+        <div class="vc-header">
+          <span class="vc-num">02</span>
+          <h2 class="vc-title">String Decomposition</h2>
+        </div>
+        <div class="decomp-scroll">
+          <div class="decomp-chars" id="decompChars">
+            <div class="empty-vis"><span class="empty-glyph">◌</span> Enter a string and run demonstration</div>
+          </div>
+          <div class="decomp-brackets" id="decompBrackets"></div>
+        </div>
+        <div class="decomp-chips" id="decompInfo"></div>
+      </div>
+
+      <div class="vis-card" id="visPumping">
+        <div class="vc-header">
+          <span class="vc-num">03</span>
+          <h2 class="vc-title">Pumping Simulation</h2>
+        </div>
+        <div class="pump-tabs" id="pumpTabs"></div>
+        <div class="pump-display" id="pumpDisplay">
+          <div class="empty-vis"><span class="empty-glyph">◌</span> Pumped strings appear here</div>
+        </div>
+      </div>
+
+      <div class="vis-card" id="visVerdict">
+        <div class="vc-header">
+          <span class="vc-num">04</span>
+          <h2 class="vc-title">Verdict &amp; Proof</h2>
+        </div>
+        <div class="verdict-box" id="verdictBox">
+          <div class="verdict-placeholder">
+            <span class="vp-icon">✦</span>
+            <p>Run a demonstration to see the analysis</p>
+          </div>
+        </div>
+        <div class="proof-steps" id="proofSteps"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Pumping Lemma Demonstration Tool</span>
+    <span class="foot-sep">·</span>
+    <span>Formal Language Theory &amp; Automata</span>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
